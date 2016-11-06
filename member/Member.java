@@ -7,27 +7,12 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
-/**
- * Entity for member table
- * @author admin
- */
 @Entity
-@NamedQueries({
-    @NamedQuery(
-        name="readMember",
-        query="select m from Member m"),
-    @NamedQuery(
-        name="readMemberByUsername",
-        query="select m from Member m where m.username=:username")
-})
 public class Member implements Serializable {
     
-    @Id
-    @GeneratedValue
+    
     private int id;
     private String username;
     private String password;
@@ -35,19 +20,19 @@ public class Member implements Serializable {
     private String usergroup;
     private boolean emailVarified;
     
-    @OneToMany
+    
     private List<Assignment> assignments;
     
     public void addAssignment(Assignment assignment) {
         assignments.add(assignment);
     }
 
- 
+    @Id
+    @GeneratedValue
     public int getId() {
         return id;
     }
 
- 
     public void setId(int id) {
         this.id = id;
     }
@@ -56,36 +41,30 @@ public class Member implements Serializable {
         return username;
     }
 
-
     public void setUsername(String username) {
         this.username = username;
     }
-
 
     public String getPassword() {
         return password;
     }
 
- 
     public void setPassword(String password) throws NoSuchAlgorithmException {
         this.password = password;
     }
-
    
     public String getEmail() {
         return email;
     }
 
- 
     public void setEmail(String email) {
         this.email = email;
     }
 
-   
+    @OneToMany
     public List<Assignment> getAssignments() {
         return assignments;
     }
-
     
     public void setAssignments(List<Assignment> assignments) {
         this.assignments = assignments;
