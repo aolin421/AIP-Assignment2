@@ -23,6 +23,7 @@ public class AssignmentBean {
     public static List<Assignment> cachedAssignments;
     
     /**
+     * Done
      * Write assignment with associated member id to database
      * @param assignment
      * @param memberId 
@@ -37,29 +38,23 @@ public class AssignmentBean {
     }
     
     /**
+     * DONE
      * Read whole list of assignment
      * @return whole list of assignment
      */
     public List<Assignment> read() {
-        TypedQuery<Assignment> query = em.createNamedQuery("readAssignment", Assignment.class);
-        List<Assignment> listFromDB = query.getResultList();
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Assignment> query = builder.createQuery(Assignment.class);
+        List<Assignment> listFromDB = em.createQuery(query).getResultList();
         for(Assignment assignment : listFromDB) {
             AssignmentBean.cachedAssignments.add(assignment);
     }
         return AssignmentBean.cachedAssignments;
     }
-    /**
-     * return the whole assignment whatever it belongs, used to admin
-     * @return all of the assignment
-     */
-    public List<Assignment> findAllAssignment() {
-        
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Assignment> query = builder.createQuery(Assignment.class);
-        return em.createQuery(query).getResultList();
-    }
+    
     
     /**
+     * DONE
      * delete the assignment for the normal users, it can only delete their own 
      * assignment.
      * @param ass 
@@ -78,21 +73,20 @@ public class AssignmentBean {
         
     }
     /**
+     * DONE
      * delete the assignment, whoever the assignment belongs to, used for admin
      * @param id 
      */
-    public void deleteAssAdmin(int id)
-    {   
+    public void deleteAssAdmin(int id){   
         Assignment ass = em.find(Assignment.class, id);
         em.remove(ass);
     }
-    public void updateAss(Assignment ass) {
-        
-        
-        em.merge(ass);
-        
-
- 
+    /**
+     * !!Will work it out later
+     * @param ass 
+     */
+    public void updateAss(Assignment ass) {  
+     em.merge(ass);
     }
     
     public Assignment findMemberById(int id) {
@@ -100,19 +94,21 @@ public class AssignmentBean {
     }
     
     /**
+     * DONE!! MAY NOT BE USED
      * find the assignments by using the member name
-     * @param name
+     * @param id
      * @return the assignment which belongs to the user
      */
-    public List<Assignment> findAssByMember(String name)
+    public List<Assignment> findAssByMember(int id)
     {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Assignment> query = builder.createQuery(Assignment.class);
         Root<Assignment> from = query.from(Assignment.class);
-        query.where(builder.equal(from.get(Assignment_.member), name));
+        query.where(builder.equal(from.get(Assignment_.member), id));
         return em.createQuery(query).getResultList();
     }
     /**
+     * DONE
      * find the assignment by calling the PK which is the assignment id.
      * @param id
      * @return the assignment with the id
@@ -121,6 +117,11 @@ public class AssignmentBean {
     {
         return em.find(Assignment.class, id);
     }
+    /**
+     * DONE
+     * @param subjectName
+     * @return 
+     */
     public List<Assignment> readAssignmentBySubjectName(String subjectName) {
         
         // Check cahed list of assignmet
@@ -142,14 +143,22 @@ public class AssignmentBean {
             return null;          
         }
     }
-    
+    /**
+     * DONE
+     * @param username
+     * @return 
+     */
     public List<Assignment> readByUsername(String username) {
         TypedQuery<Assignment> query = em.createNamedQuery("readAssignmentByUsername", Assignment.class);
         query.setParameter("username", username);
         AssignmentBean.cachedAssignments = query.getResultList();
         return sort(AssignmentBean.cachedAssignments);
     }
-    
+    /**
+     * DONE
+     * @param assignmentList
+     * @return 
+     */
     public List<Assignment> sort(List<Assignment> assignmentList) {
         Assignment[] assignments = null;
         if(assignmentList.size() > 1) {
