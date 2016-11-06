@@ -6,48 +6,30 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
 
 /**
- * Entity for assignment table
+ * DONE
  * @author admin
  */
 @Entity
-@NamedQueries({
-    @NamedQuery(
-        name="readAssignment",
-        query="select a from Assignment a"),
-    @NamedQuery(
-        name="readAssignmentByUsername",
-        query="select a from Assignment a where a.member.username=:username"),
-    @NamedQuery(
-        name="readAssignmentBySubjectName",
-        query="select a from Assignment a where a.subject=:subject")
-})
 public class Assignment implements Serializable {
     
-    @Id
-    @GeneratedValue
     private int id;
+    private int daysLeft;
     private String name;
     private String description;
     private String dueDate;
     private String subject;
     private String mark;
     
-    @ManyToOne
     private Member member;
     
-    @Transient
-    private int daysLeft;
-
-    
+    @Id
+    @GeneratedValue
     public int getId() {
         return id;
     }
-
 
     public void setId(int id) {
         this.id = id;
@@ -57,62 +39,52 @@ public class Assignment implements Serializable {
         return name;
     }
 
-
     public void setName(String name) {
         this.name = name;
     }
-
 
     public String getDueDate() {
         return dueDate;
     }
 
-
     public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
-
 
     public String getSubject() {
         return subject;
     }
 
-
     public void setSubject(String subject) {
         this.subject = subject;
     }
-
 
     public String getMark() {
         return mark;
     }
 
-
     public void setMark(String mark) {
         this.mark = mark;
     }
-
 
     public String getDescription() {
         return description;
     }
 
-
     public void setDescription(String description) {
         this.description = description;
     }
 
- 
+    @ManyToOne
     public Member getMember() {
         return member;
     }
-
 
     public void setMember(Member member) {
         this.member = member;
     }
 
-
+    @Transient
     public int getDaysLeft() {
         return daysLeft;
     }
