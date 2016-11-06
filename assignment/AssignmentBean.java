@@ -56,17 +56,16 @@ public class AssignmentBean {
     /**
      * DONE
      * delete the assignment for the normal users, it can only delete their own 
-     * assignment.
-     * @param ass 
+     * assignment. 
+     * @param assignment
      */
-    public void deleteAss(Assignment ass)
-    {
-        Assignment managed = em.find(Assignment.class, ass.getId());
+    public void deleteAss(Assignment assignment){
+        Assignment managed = em.find(Assignment.class, assignment.getId());
         
         managed.getMember().getAssignments().remove(managed);
         
-        if (managed != ass) {
-            ass.getMember().getAssignments().remove(ass);
+        if (managed != assignment) {
+            assignment.getMember().getAssignments().remove(assignment);
         }
         
         em.remove(managed);
@@ -82,11 +81,11 @@ public class AssignmentBean {
         em.remove(ass);
     }
     /**
-     * !!Will work it out later
-     * @param ass 
+     * !!Will work it out later 
+     * @param assignment
      */
-    public void updateAss(Assignment ass) {  
-     em.merge(ass);
+    public void updateAss(Assignment assignment) {  
+     em.merge(assignment);
     }
     
     public Assignment findMemberById(int id) {
@@ -99,8 +98,7 @@ public class AssignmentBean {
      * @param id
      * @return the assignment which belongs to the user
      */
-    public List<Assignment> findAssByMember(int id)
-    {
+    public List<Assignment> findAssByMember(int id){
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Assignment> query = builder.createQuery(Assignment.class);
         Root<Assignment> from = query.from(Assignment.class);
@@ -113,8 +111,7 @@ public class AssignmentBean {
      * @param id
      * @return the assignment with the id
      */
-    public Assignment findById(int id)
-    {
+    public Assignment findById(int id){
         return em.find(Assignment.class, id);
     }
     /**
